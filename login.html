@@ -278,9 +278,11 @@
       document.getElementById('accountNumber').classList.toggle('hidden');
     }
 
-    function logout() {
-      alert(translations[currentLang].logoutMsg);
-    }
+  function logout() {
+  alert(translations[currentLang].logoutMsg);
+  window.location.href = "index.html"; // Redirect after alert
+}
+
 
     function translateDescription(text) {
       for (const key in translationsMap) {
