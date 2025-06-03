@@ -134,191 +134,189 @@
 
     }
   </style>
-</head>
-<body>
-  <div class="header">
-    <div id="welcome">Добро пожаловать, Simonova Viktoria Andreevna</div>
-    <div id="balance">Баланс: ₽3050</div>
-  </div>
-
-  <div class="container">
-    <div class="top-buttons">
-      <div class="lang-switcher">
-        <label for="lang">🌐</label>
-        <select id="lang" onchange="switchLang(this.value)">
-          <option value="ru">Русский</option>
-          <option value="en">English</option>
-        </select>
+</head><body>
+    <div class="header">
+      <div id="welcome">Добро пожаловать, Simonova Viktoria Andreevna</div>
+      <div id="balance">Баланс: ₽268,500</div>
+    </div>
+  
+    <div class="container">
+      <div class="top-buttons">
+        <div class="lang-switcher">
+          <label for="lang">🌐</label>
+          <select id="lang" onchange="switchLang(this.value)">
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <button class="withdraw-button" onclick="alert(currentLang === 'ru' ? 'Пожалуйста, свяжитесь с поддержкой для вывода средств.' : 'Please contact support to withdraw funds.')">Withdraw</button>
+        <button class="logout-button" onclick="logout()">Logout</button>
       </div>
-  <button class="withdraw-button" onclick="alert(currentLang === 'ru' ? 'Пожалуйста, свяжитесь с поддержкой для вывода средств: tbanksuportcenter@gmail.com' : 'Please contact support to withdraw funds: tbanksuportcenter@gmail.com')">Withdraw</button>
-
-      <button class="logout-button" onclick="logout()">Logout</button>
-    </div>
-
-    <div class="account-info">
-      <p><strong id="account-label">Номер счёта:</strong> <span id="accountNumber" class="hidden">2200700436539695</span></p>
-      <button class="toggle-button" id="toggleAccountBtn" onclick="toggleAccountNumber()">Показать / Скрыть счёт</button>
-    </div>
-
-    <div class="transactions">
-      <h3 id="transaction-title">История транзакций</h3>
-      <table>
-        <thead>
-          <tr>
-            <th id="th-date">Дата</th>
-            <th id="th-desc">Описание</th>
-            <th id="th-amount">Сумма</th>
-            <th id="th-type">Тип</th>
-          </tr>
-        </thead>
-        <tbody id="transaction-body">
-          <!-- Transactions will be injected here -->
-        </tbody>
-      </table>
-      <div class="show-more">
-        <button class="toggle-button" id="showMoreBtn" onclick="showMoreTransactions()">Показать ещё</button>
+  
+      <div class="account-info">
+        <p><strong id="account-label">Номер счёта:</strong> <span id="accountNumber" class="hidden">2200700436539695</span></p>
+        <button class="toggle-button" id="toggleAccountBtn" onclick="toggleAccountNumber()">Показать / Скрыть счёт</button>
+      </div>
+  
+      <div class="transactions">
+        <h3 id="transaction-title">История транзакций</h3>
+        <table>
+          <thead>
+            <tr>
+              <th id="th-date">Дата</th>
+              <th id="th-desc">Описание</th>
+              <th id="th-amount">Сумма</th>
+              <th id="th-type">Тип</th>
+            </tr>
+          </thead>
+          <tbody id="transaction-body">
+            <!-- Transactions will be injected here -->
+          </tbody>
+        </table>
+        <div class="show-more">
+          <button class="toggle-button" id="showMoreBtn" onclick="showMoreTransactions()">Показать ещё</button>
+        </div>
       </div>
     </div>
-  </div>
-
-  <script>
-    const translations = {
-      en: {
-        welcome: 'Welcome, Simonova Viktoria Andreevna',
-        balance: 'Balance: ₽3050',
-        accountLabel: 'Account Number:',
-        toggleButton: 'Show / Hide Account',
-        transactionTitle: 'Transaction History',
-        date: 'Date',
-        description: 'Description',
-        amount: 'Amount',
-        type: 'Type',
-        showMore: 'Show More',
-        withdrawMsg: 'Please contact support to withdraw funds.',
-        logoutMsg: 'You have been logged out.'
-      },
-      ru: {
-        welcome: 'Добро пожаловать, Simonova Viktoria Andreevna',
-        balance: 'Баланс: ₽3050',
-        accountLabel: 'Номер счёта:',
-        toggleButton: 'Показать / Скрыть счёт',
-        transactionTitle: 'История транзакций',
-        date: 'Дата',
-        description: 'Описание',
-        amount: 'Сумма',
-        type: 'Тип',
-        showMore: 'Показать ещё',
-        withdrawMsg: 'Пожалуйста, свяжитесь с поддержкой для вывода средств.',
-        logoutMsg: 'Вы вышли из системы.'
-      }
-    };
-
-    const transactions = [
-      ["2025-05-30", "Перевод от Ivan Petrov", "+₽10,000", "Зачисление"],
-      ["2025-05-27", "Покупка Ozon", "-₽1,800", "Списание"],
-      ["2025-05-22", "Счет за электроэнергию", "-₽650", "Списание"],
-      ["2025-05-18", "Зарплата", "+₽25,000", "Зачисление"],
-      ["2025-05-10", "Яндекс Такси", "-₽500", "Списание"],
-      ["2025-05-05", "Пятёрочка", "-₽1,200", "Списание"],
-      ["2025-04-28", "Пополнение Tele2", "-₽300", "Списание"],
-      ["2025-04-20", "Перевод Anton Belyaev", "-₽5,000", "Списание"],
-      ["2025-04-15", "Возврат курса", "+₽2,500", "Зачисление"],
-      ["2025-04-01", "Абонемент спортзал", "-₽1,000", "Списание"],
-      ["2025-03-25", "Подписка Spotify", "-₽169", "Списание"],
-      ["2025-03-20", "Фриланс Olga S.", "+₽15,000", "Зачисление"],
-      ["2025-03-15", "Подписка Netflix", "-₽999", "Списание"],
-      ["2025-03-10", "Ресторан \"Гуси-Лебеди\"", "-₽2,300", "Списание"],
-      ["2025-03-05", "Книжный магазин", "-₽1,150", "Списание"],
-      ["2025-02-28", "Бонус", "+₽5,000", "Зачисление"],
-      ["2025-02-25", "Оплата MTS", "-₽400", "Списание"],
-      ["2025-02-20", "Перевод от Sergey Ivanov", "+₽7,500", "Зачисление"],
-      ["2025-02-15", "Wildberries", "-₽2,750", "Списание"],
-      ["2025-02-10", "Кофейня \"KofeTime\"", "-₽350", "Списание"]
-    ];
-
-    const translationsMap = {
-      "Перевод от": "Transfer from",
-      "Покупка": "Purchase",
-      "Счет за электроэнергию": "Electricity bill",
-      "Зарплата": "Salary",
-      "Подписка": "Subscription",
-      "Книжный магазин": "Bookstore",
-      "Ресторан": "Restaurant",
-      "Пополнение": "Top-up",
-      "Оплата": "Payment",
-      "Бонус": "Bonus",
-      "Возврат курса": "Course refund",
-      "Абонемент спортзал": "Gym membership",
-      "Фриланс": "Freelance",
-      "Списание": "Debit",
-      "Зачисление": "Credit"
-    };
-
-    let currentLang = 'ru';
-    let transactionIndex = 0;
-    const step = 5;
-
-    function switchLang(lang) {
-      currentLang = lang;
-      const t = translations[lang];
-      document.getElementById("welcome").textContent = t.welcome;
-      document.getElementById("balance").textContent = t.balance;
-      document.getElementById("account-label").textContent = t.accountLabel;
-      document.getElementById("toggleAccountBtn").textContent = t.toggleButton;
-      document.getElementById("transaction-title").textContent = t.transactionTitle;
-      document.getElementById("th-date").textContent = t.date;
-      document.getElementById("th-desc").textContent = t.description;
-      document.getElementById("th-amount").textContent = t.amount;
-      document.getElementById("th-type").textContent = t.type;
-      document.getElementById("showMoreBtn").textContent = t.showMore;
-
-      renderTransactions();
-    }
-
-    function toggleAccountNumber() {
-      document.getElementById('accountNumber').classList.toggle('hidden');
-    }
-
-  function logout() {
-  alert(translations[currentLang].logoutMsg);
-  window.location.href = "index.html"; // Redirect after alert
-}
-
-
-    function translateDescription(text) {
-      for (const key in translationsMap) {
-        if (text.includes(key)) {
-          return text.replace(key, translationsMap[key]);
+  
+    <script>
+      const translations = {
+        en: {
+          welcome: 'Welcome, Simonova Viktoria Andreevna',
+          balance: 'Balance: ₽268,500',
+          accountLabel: 'Account Number:',
+          toggleButton: 'Show / Hide Account',
+          transactionTitle: 'Transaction History',
+          date: 'Date',
+          description: 'Description',
+          amount: 'Amount',
+          type: 'Type',
+          showMore: 'Show More',
+          withdrawMsg: 'Please contact support to withdraw funds.',
+          logoutMsg: 'You have been logged out.'
+        },
+        ru: {
+          welcome: 'Добро пожаловать, Simonova Viktoria Andreevna',
+          balance: 'Баланс: ₽268,500',
+          accountLabel: 'Номер счёта:',
+          toggleButton: 'Показать / Скрыть счёт',
+          transactionTitle: 'История транзакций',
+          date: 'Дата',
+          description: 'Описание',
+          amount: 'Сумма',
+          type: 'Тип',
+          showMore: 'Показать ещё',
+          withdrawMsg: 'Пожалуйста, свяжитесь с поддержкой для вывода средств.',
+          logoutMsg: 'Вы вышли из системы.'
         }
+      };
+  
+      const transactions = [
+        ["2025-05-30", "Перевод от Ivan Petrov", "+₽50,000", "Зачисление"],
+        ["2025-05-27", "Покупка Ozon", "-₽7,800", "Списание"],
+        ["2025-05-22", "Счет за электроэнергию", "-₽2,500", "Списание"],
+        ["2025-05-18", "Зарплата", "+₽150,000", "Зачисление"],
+        ["2025-05-10", "Яндекс Такси", "-₽1,200", "Списание"],
+        ["2025-05-05", "Пятёрочка", "-₽4,300", "Списание"],
+        ["2025-04-28", "Пополнение Tele2", "-₽1,000", "Списание"],
+        ["2025-04-20", "Перевод Anton Belyaev", "-₽20,000", "Списание"],
+        ["2025-04-15", "Возврат курса", "+₽10,000", "Зачисление"],
+        ["2025-04-01", "Абонемент спортзал", "-₽3,000", "Списание"],
+        ["2025-03-25", "Подписка Spotify", "-₽500", "Списание"],
+        ["2025-03-20", "Фриланс Olga S.", "+₽40,000", "Зачисление"],
+        ["2025-03-15", "Подписка Netflix", "-₽1,200", "Списание"],
+        ["2025-03-10", "Ресторан \"Гуси-Лебеди\"", "-₽5,000", "Списание"],
+        ["2025-03-05", "Книжный магазин", "-₽2,800", "Списание"],
+        ["2025-02-28", "Бонус", "+₽15,000", "Зачисление"],
+        ["2025-02-25", "Оплата MTS", "-₽1,500", "Списание"],
+        ["2025-02-20", "Перевод от Sergey Ivanov", "+₽25,000", "Зачисление"],
+        ["2025-02-15", "Wildberries", "-₽6,000", "Списание"],
+        ["2025-02-10", "Кофейня \"KofeTime\"", "-₽1,000", "Списание"]
+      ];
+  
+      const translationsMap = {
+        "Перевод от": "Transfer from",
+        "Покупка": "Purchase",
+        "Счет за электроэнергию": "Electricity bill",
+        "Зарплата": "Salary",
+        "Подписка": "Subscription",
+        "Книжный магазин": "Bookstore",
+        "Ресторан": "Restaurant",
+        "Пополнение": "Top-up",
+        "Оплата": "Payment",
+        "Бонус": "Bonus",
+        "Возврат курса": "Course refund",
+        "Абонемент спортзал": "Gym membership",
+        "Фриланс": "Freelance",
+        "Списание": "Debit",
+        "Зачисление": "Credit"
+      };
+  
+      let currentLang = 'ru';
+      let transactionIndex = 0;
+      const step = 5;
+  
+      function switchLang(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        document.getElementById("welcome").textContent = t.welcome;
+        document.getElementById("balance").textContent = t.balance;
+        document.getElementById("account-label").textContent = t.accountLabel;
+        document.getElementById("toggleAccountBtn").textContent = t.toggleButton;
+        document.getElementById("transaction-title").textContent = t.transactionTitle;
+        document.getElementById("th-date").textContent = t.date;
+        document.getElementById("th-desc").textContent = t.description;
+        document.getElementById("th-amount").textContent = t.amount;
+        document.getElementById("th-type").textContent = t.type;
+        document.getElementById("showMoreBtn").textContent = t.showMore;
+  
+        renderTransactions();
       }
-      return text;
-    }
-
-    function showMoreTransactions() {
-      const tbody = document.getElementById("transaction-body");
-      for (let i = transactionIndex; i < transactionIndex + step && i < transactions.length; i++) {
-        const [date, desc, amount, type] = transactions[i];
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${date}</td>
-          <td>${currentLang === 'en' ? translateDescription(desc) : desc}</td>
-          <td>${amount}</td>
-          <td>${currentLang === 'en' ? translationsMap[type] || type : type}</td>
-        `;
-        tbody.appendChild(row);
+  
+      function toggleAccountNumber() {
+        document.getElementById('accountNumber').classList.toggle('hidden');
       }
-      transactionIndex += step;
-    }
-
-    function renderTransactions() {
-      transactionIndex = 0;
-      document.getElementById("transaction-body").innerHTML = '';
-      showMoreTransactions();
-    }
-
-    window.onload = () => {
-      renderTransactions();
-    };
-  </script>
-</body>
+  
+      function logout() {
+        alert(translations[currentLang].logoutMsg);
+        window.location.href = "index.html";
+      }
+  
+      function translateDescription(text) {
+        for (const key in translationsMap) {
+          if (text.includes(key)) {
+            return text.replace(key, translationsMap[key]);
+          }
+        }
+        return text;
+      }
+  
+      function showMoreTransactions() {
+        const tbody = document.getElementById("transaction-body");
+        for (let i = transactionIndex; i < transactionIndex + step && i < transactions.length; i++) {
+          const [date, desc, amount, type] = transactions[i];
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${date}</td>
+            <td>${currentLang === 'en' ? translateDescription(desc) : desc}</td>
+            <td>${amount}</td>
+            <td>${currentLang === 'en' ? translationsMap[type] || type : type}</td>
+          `;
+          tbody.appendChild(row);
+        }
+        transactionIndex += step;
+      }
+  
+      function renderTransactions() {
+        transactionIndex = 0;
+        document.getElementById("transaction-body").innerHTML = '';
+        showMoreTransactions();
+      }
+  
+      window.onload = () => {
+        renderTransactions();
+      };
+    </script>
+  </body>
+  
 </html>
